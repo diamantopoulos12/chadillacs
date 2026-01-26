@@ -1,4 +1,4 @@
-package com.example;
+package com.chadillacs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +16,12 @@ public class CarRentalApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CarRentalApplication.class, args);
+
+
+                System.out.println("Test startup message");
+                
+                
+                
 	}
 
 }
