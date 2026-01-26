@@ -1,4 +1,4 @@
-package com.chadillacs;
+package com.chadillacs.controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
