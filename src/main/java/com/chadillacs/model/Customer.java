@@ -16,6 +16,15 @@ public class Customer {
     private String lastName;
     private String phoneNumber;
 
+    //Constructor - make public for now because initCustomerMockData needs this.
+    public Customer() {}
+
+    //Constructor forcing first, last names.
+    public Customer(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public String getFirstName() {
         return firstName;
     }
