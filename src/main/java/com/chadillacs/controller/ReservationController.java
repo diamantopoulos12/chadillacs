@@ -38,7 +38,7 @@ public class ReservationController {
     @RequestMapping("/test-create-reservation")
     String test_create_reservation() {
 
-        reservationService.createReservation(10L, LocalDate.now(), 4, VehicleType.SEDAN);
+        reservationService.createReservation(10L, LocalDate.now(), 4, VehicleType.SUV);
 
         return "test-create-reservation\n";
     }

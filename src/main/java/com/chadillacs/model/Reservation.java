@@ -55,4 +55,22 @@ public class Reservation {
     public void setNumDays(Integer numDays) {
         this.numDays = numDays;
     }
+
+    public void setId(long l) {
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", vehicle=" + vehicle +
+                ", startDate=" + startDate +
+                ", numDays=" + numDays +
+                '}';
+    }
 }

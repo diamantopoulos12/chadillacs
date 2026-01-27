@@ -53,4 +53,15 @@ public class Vehicle {
     public void setModelYear(String modelYear) {
         this.modelYear = modelYear;
     }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id=" + id +
+                ", type=" + type +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", modelYear='" + modelYear + '\'' +
+                '}';
+    }
 }
