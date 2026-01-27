@@ -1,9 +1,11 @@
 package com.chadillacs;
 
 import com.chadillacs.model.Customer;
+import com.chadillacs.model.Reservation;
 import com.chadillacs.model.Vehicle;
 import com.chadillacs.model.VehicleType;
 import com.chadillacs.repository.CustomerRepository;
+import com.chadillacs.repository.ReservationRepository;
 import com.chadillacs.repository.VehicleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +67,6 @@ public class CarRentalApplication {
     CommandLineRunner initVehicleMockData(VehicleRepository vehicleRepository) {
         return args -> {
 
-            System.out.println("DEBUG ARE WE HERE?");
             Vehicle vehicle1 = new Vehicle();
             vehicle1.setType(VehicleType.SUV);
             vehicle1.setMake("Volkswagen");
@@ -81,4 +83,33 @@ public class CarRentalApplication {
 
         };
     }
+
+    //Initialize a fake reservation
+    @Bean
+    CommandLineRunner initReservationMockData(ReservationRepository reservationRepository, CustomerRepository customerRepository, VehicleRepository vehicleRepository) {
+        return args -> {
+
+            //Case 1 Rent Zdeno the first vehicle we find.
+            Customer customerToRent = customerRepository.findByLastName("Chara");
+
+            Vehicle vehicleToRent = null;
+            Iterable<Vehicle> vehicleIterable = vehicleRepository.findAll();
+
+            for (Vehicle vehicle : vehicleIterable) {
+                vehicleToRent = vehicle;
+                break;
+            }
+
+            Reservation myReservation = new Reservation();
+            myReservation.setCustomer(customerToRent);
+            myReservation.setVehicle(vehicleToRent);
+            myReservation.setStartDate(LocalDate.now());
+            myReservation.setNumDays(3);
+            reservationRepository.save(myReservation);
+
+        };
+    }
+
+
+
 }

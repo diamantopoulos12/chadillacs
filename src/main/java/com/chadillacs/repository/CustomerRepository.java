@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
-    //Custom data queries?
-    List<Customer> findByLastName(String lastName);
+    //Custom data queries.
+    Customer findByLastName(String lastName);
 
 }
