@@ -10,7 +10,7 @@ public class ReservationController {
 
 	@RequestMapping("/reservation")
 	String reservation() {
-		return "This is the reservation\n";
+		return "This is the reservation handler\n";
 	}
 
 }

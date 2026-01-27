@@ -1,7 +1,10 @@
 package com.chadillacs;
 
 import com.chadillacs.model.Customer;
+import com.chadillacs.model.Vehicle;
+import com.chadillacs.model.VehicleType;
 import com.chadillacs.repository.CustomerRepository;
+import com.chadillacs.repository.VehicleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,6 +29,7 @@ public class CarRentalApplication {
                 System.out.println("Test startup message");
 	}
 
+    //Initialize some mock customer data
     @Bean
     CommandLineRunner initCustomerMockData(CustomerRepository customerRepository) {
         return args -> {
@@ -51,6 +55,29 @@ public class CarRentalApplication {
             for (Customer customer : customerList){
                 System.out.println("Customer: " + customer.getFirstName() + " " + customer.getLastName() + " ID: " + customer.getId());
             }
+
+        };
+    }
+
+    //Initialize some mock vehicle data
+    @Bean
+    CommandLineRunner initVehicleMockData(VehicleRepository vehicleRepository) {
+        return args -> {
+
+            System.out.println("DEBUG ARE WE HERE?");
+            Vehicle vehicle1 = new Vehicle();
+            vehicle1.setType(VehicleType.SUV);
+            vehicle1.setMake("Volkswagen");
+            vehicle1.setModel("Tiguan");
+            vehicle1.setModelYear("2021");
+            vehicleRepository.save(vehicle1);
+
+            Vehicle vehicle2 = new Vehicle();
+            vehicle2.setType(VehicleType.SUV);
+            vehicle2.setMake("Jeep");
+            vehicle2.setModel("Wrangler");
+            vehicle2.setModelYear("2010");
+            vehicleRepository.save(vehicle2);
 
         };
     }
