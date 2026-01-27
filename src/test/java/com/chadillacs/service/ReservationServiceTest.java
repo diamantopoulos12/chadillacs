@@ -20,7 +20,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -63,7 +62,7 @@ class ReservationServiceTest {
     }
 
     @Test
-    void test_reservation_getAllReservation() {
+    void test_reservation_getAllReservations() {
 
         List<Reservation> mockReservations = List.of(testReservation);
         when(reservationRepository.findAll()).thenReturn(mockReservations);
@@ -71,6 +70,7 @@ class ReservationServiceTest {
         List<Reservation> result = reservationService.getAllReservations();
 
         assertNotNull(result);
+
         assertEquals(1, result.size());
         assertEquals("Pink", result.get(0).getCustomer().getFirstName());
     }
