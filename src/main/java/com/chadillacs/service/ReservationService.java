@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -92,21 +93,41 @@ public class ReservationService {
 
     /**
      * Return true if vehicle is available to be rented.
-     * @param vehicle
-     * @param date
-     * @param days
+     * 1. Find all reservations //TODO optimize to find only reservations with that vehicle
+     * 2. Loop through reservations until we find a reservation that matches this vehicle
+     * 3. Check there are no date conflicts
+     * 4. Hmm.
+     * @param reqVehicle
+     * @param reqDate
+     * @param reqDays
      * @return boolean
      */
-    public Boolean validateVehicleIsAvailable(Vehicle vehicle, LocalDate date, Integer days) {
+    public Boolean validateVehicleIsAvailable(Vehicle reqVehicle, LocalDate reqDate, Integer reqDays) {
 
         Boolean isValidated = true;
 
-        logger.info("Checking if we can reserve vehicle: " + vehicle.toString());
+        logger.info("Checking if we can reserve vehicle: " + reqVehicle.toString());
 
         Iterable<Reservation> reservationList = reservationRepository.findAll();
         logger.info("Scanning current reservations: " + reservationList.toString());
         for (Reservation reservation : reservationList) {
-            logger.info("Existing reservations loop - reservation: " + reservation.toString());
+            logger.info("Checking if reservation is linked to requested vehicle: " + reservation.toString());
+
+            if (Objects.equals(reqVehicle.getId(), reservation.getVehicle().getId())) {
+                logger.info("Found existing vehicle reservation: " + reservation.toString());
+
+                //Now we need to calculate the current reservation start date plus number of days
+                //And compare that to the requested reservation startDate and number of days
+                //If there is a conflict we need to set isValidated to false and deny the reservation
+                LocalDate resDate = reservation.getStartDate();
+                Integer resDays = reservation.getNumDays();
+                logger.info("Requested date: " + reqDate + " for number of days: " + reqDays);
+                logger.info("Reservation date: " + resDate + " for number of days: " + resDays);
+                logger.info("How do I check if these overlap?");
+
+            } else {
+                logger.info("This reservation is for another vehicle: " + reservation.toString());
+            }
 
             //TODO this is where we need to fix next
 
