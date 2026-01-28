@@ -8,7 +8,10 @@ import com.chadillacs.repository.CustomerRepository;
 import com.chadillacs.repository.ReservationRepository;
 import com.chadillacs.repository.VehicleRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -23,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ReservationServiceTest {
 
     @Mock
@@ -62,35 +66,28 @@ class ReservationServiceTest {
     }
 
     @Test
+    @Order(1)
     void test_reservation_getAllReservations() {
 
         List<Reservation> mockReservations = List.of(testReservation);
         when(reservationRepository.findAll()).thenReturn(mockReservations);
 
         List<Reservation> result = reservationService.getAllReservations();
-
         assertNotNull(result);
-
         assertEquals(1, result.size());
         assertEquals("Pink", result.get(0).getCustomer().getFirstName());
     }
 
     @Test
+    @Order(2)
     void test_reservation_createReservation() {
 
         List<Reservation> mockReservations = List.of(testReservation);
         when(reservationRepository.findAll()).thenReturn(mockReservations);
-
         when(customerRepository.findById(1L)).thenReturn(Optional.of(testCustomer));
         when(vehicleRepository.findAll()).thenReturn(List.of(testVehicle));
 
-
         Reservation result = reservationService.createReservation(1L, LocalDate.now(), 2, VehicleType.SEDAN);
-
-        System.out.println("Result: " + result);
-
         assertNotNull(result);
-
     }
-
 }
