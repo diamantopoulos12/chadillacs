@@ -123,17 +123,26 @@ public class ReservationService {
                 Integer resDays = reservation.getNumDays();
                 logger.info("Requested date: " + reqDate + " for number of days: " + reqDays);
                 logger.info("Reservation date: " + resDate + " for number of days: " + resDays);
-                logger.info("How do I check if these overlap?");
+                
+                // Figure out the end dates of the requested reservation and existing one
+                LocalDate resEndDate = resDate.plusDays(resDays);
+                LocalDate reqEndDate = reqDate.plusDays(reqDays);
+                
+                // Check for overlap - the requested date cannot be before this reservation ends and vice versa
+                boolean overlaps = !(resEndDate.isBefore(reqDate) || reqEndDate.isBefore(resDate));
+                
+                if (overlaps) {
+                    logger.info("Date overlap detected - vehicle not available");
+                    isValidated = false;
+                    break; // No need to check other reservations
+                } else {
+                    logger.info("No overlap - continue checking");
+                }
 
             } else {
                 logger.info("This reservation is for another vehicle: " + reservation.toString());
             }
-
-            //TODO this is where we need to fix next
-
-
         }
-
 
         return isValidated;
     }
